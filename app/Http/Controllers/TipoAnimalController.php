@@ -17,14 +17,22 @@ class TipoAnimalController extends Controller
     }
 
     public function store(Request $request) {
-        return TipoAnimal::create($request->all());
+        $validated = $request->validate([
+            'descrip_tipo_animal' => 'required|string|max:50|unique:tipo_animal,descrip_tipo_animal'
+        ]);
+        return TipoAnimal::create($validated);
     }
 
     public function update(Request $request, $id) {
-        $tipoAnimal = TipoAnimal::findOrFail($id);
-        $tipoAnimal->update($request->all());
-        return $tipoAnimal;
+        $validated = $request->validate([
+            'descrip_tipo_animal' => 'required|string|max:50|unique:tipo_animal,descrip_tipo_animal,' . $id . ',id_tipo_animal'
+        ]);
+
+        $tipo = TipoAnimal::findOrFail($id);
+        $tipo->update($validated);
+        return $tipo;
     }
+
 
     public function destroy($id) {
         $tipoAnimal = TipoAnimal::findOrFail($id);
