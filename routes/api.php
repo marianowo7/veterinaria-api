@@ -61,4 +61,3 @@ Route::get('/pago-consultas', [PagoConsultaController::class, 'index']);
 Route::post('/pago-consultas', [PagoConsultaController::class, 'store']);
 Route::put('/pago-consultas/{id}', [PagoConsultaController::class, 'update']);
 Route::delete('/pago-consultas/{id}', [PagoConsultaController::class, 'destroy']);
-
