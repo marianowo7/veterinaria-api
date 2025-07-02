@@ -17,10 +17,17 @@ class TipoPagoController extends Controller
     }
 
     public function store(Request $request) {
-        return TipoPago::create($request->all());
+        $validated = $request->validate([
+            'descrip_tipo_pago' => 'required|string|max:50|unique:tipo_pago,descrip_tipo_pago'
+        ]);
+
+        return TipoPago::create($validated);
     }
 
     public function update(Request $request, $id) {
+        $validated = $request->validate([
+            'descrip_tipo_pago' => 'required|string|max:50|unique:tipo_pago,descrip_tipo_pago,' . $id . ',id_tipo_pago'
+        ]);
         $TipoPago = TipoPago::findOrFail($id);
         $TipoPago->update($request->all());
         return $TipoPago;

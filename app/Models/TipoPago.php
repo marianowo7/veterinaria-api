@@ -11,7 +11,6 @@ class TipoPago extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'id_tipo_pago',
         'descrip_tipo_pago'
     ];
 }
