@@ -15,4 +15,9 @@ class TipoAnimal extends Model
         'id_tipo_animal',
         'descrip_tipo_animal'
     ];
+
+    public function mascotas()  {
+        return $this->hasMany(Mascota::class, 'id_tipo_animal', 'id_tipo_animal');
+    }
+
 }

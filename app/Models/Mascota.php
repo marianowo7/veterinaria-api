@@ -17,4 +17,9 @@ class Mascota extends Model
         'peso_kg',
         'id_raza'
     ];
+
+    public function tipoAnimal(){
+        return $this->belongsTo(TipoAnimal::class, 'id_tipo_animal', 'id_tipo_animal');
+    }
+
 }
