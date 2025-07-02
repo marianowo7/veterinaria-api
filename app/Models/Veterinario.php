@@ -18,4 +18,9 @@ class veterinario extends Model
         'horario_entrada',
         'horario_salida'
     ];
+
+    public function consultas() {
+        return $this->hasMany(Consulta::class, 'cuit_veterinario', 'cuit_vet');
+    }
+
 }

@@ -18,4 +18,23 @@ class Consulta extends Model
         'descripcion_consulta',
         'cuit_veterinario'
     ];
+
+    public function veterinario() {
+        return $this->belongsTo(Veterinario::class, 'cuit_veterinario', 'cuit_vet');
+    }
+
+    public function mascota() {
+        return $this->belongsTo(\App\Models\Mascota::class, 'id_animal', 'id_mascota');
+    }
+
+    public function medicamentos()
+    {
+        return $this->belongsToMany(
+            \App\Models\Medicamento::class, 
+            'consulta_medicamento', 
+            'id_consulta', 
+            'id_medicamento'
+        );
+    }
+
 }

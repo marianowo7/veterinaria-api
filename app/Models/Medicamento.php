@@ -15,4 +15,10 @@ class medicamento extends Model
         'id_medicamento',
         'descrip_medicamento'
     ];
+
+    public function consultas()
+    {
+        return $this->belongsToMany(Consulta::class, 'consulta_medicamento', 'id_medicamento', 'id_consulta');
+    }
+
 }

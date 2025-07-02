@@ -22,4 +22,12 @@ class Mascota extends Model
         return $this->belongsTo(TipoAnimal::class, 'id_tipo_animal', 'id_tipo_animal');
     }
 
+    public function raza(){
+        return $this->belongsTo(Raza::class, 'id_raza', 'id_raza');
+    }
+
+    public function consultas() {
+        return $this->hasMany(Consulta::class, 'id_animal', 'id_mascota');
+    }
+
 }

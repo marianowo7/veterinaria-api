@@ -13,4 +13,9 @@ class TipoPago extends Model
     protected $fillable = [
         'descrip_tipo_pago'
     ];
+
+    public function pagos() {
+        return $this->hasMany(PagoConsulta::class, 'id_tipo_pago', 'id_tipo_pago');
+    }
+
 }
