@@ -27,14 +27,17 @@ class Consulta extends Model
         return $this->belongsTo(\App\Models\Mascota::class, 'id_animal', 'id_mascota');
     }
 
-    public function medicamentos()
-    {
+    public function medicamentos() {
         return $this->belongsToMany(
             \App\Models\Medicamento::class, 
             'consulta_medicamento', 
             'id_consulta', 
             'id_medicamento'
         );
+    }
+
+    public function pagoConsulta() {
+        return $this->hasOne(PagoConsulta::class, 'id_consulta', 'id_consulta');
     }
 
 }
