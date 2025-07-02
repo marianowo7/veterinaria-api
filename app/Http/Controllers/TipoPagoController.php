@@ -29,7 +29,7 @@ class TipoPagoController extends Controller
             'descrip_tipo_pago' => 'required|string|max:50|unique:tipo_pago,descrip_tipo_pago,' . $id . ',id_tipo_pago'
         ]);
         $TipoPago = TipoPago::findOrFail($id);
-        $TipoPago->update($request->all());
+        $TipoPago->update($validated);
         return $TipoPago;
     }
 
