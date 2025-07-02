@@ -12,7 +12,6 @@ class PagoConsulta extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'id_pago',
         'id_tipo_pago',
         'importe',
         'id_consulta'

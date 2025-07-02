@@ -17,14 +17,32 @@ class MascotaController extends Controller
     }
 
     public function store(Request $request) {
-        return Mascota::create($request->all());
+        $validated = $request->validate([
+            'nombre_mascota' => 'required|string|max:50',
+            'cuit_duenio' => 'required|string|size:11',
+            'id_tipo_animal' => 'required|integer|exists:tipo_animal,id_tipo_animal',
+            'peso_kg' => 'required|integer|min:0',
+            'id_raza' => 'required|integer|exists:raza,id_raza'
+        ]);
+
+        return Mascota::create($validated);
     }
 
+
     public function update(Request $request, $id) {
+        $validated = $request->validate([
+            'nombre_mascota' => 'required|string|max:50',
+            'cuit_duenio' => 'required|string|size:11',
+            'id_tipo_animal' => 'required|integer|exists:tipo_animal,id_tipo_animal',
+            'peso_kg' => 'required|integer|min:0',
+            'id_raza' => 'required|integer|exists:raza,id_raza'
+        ]);
+
         $mascota = Mascota::findOrFail($id);
-        $mascota->update($request->all());
+        $mascota->update($validated);
         return $mascota;
     }
+
 
     public function destroy($id) {
         $mascota = Mascota::findOrFail($id);

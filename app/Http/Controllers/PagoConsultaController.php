@@ -17,13 +17,24 @@ class PagoConsultaController extends Controller
     }
 
     public function store(Request $request) {
-        return PagoConsulta::create($request->all());
+        $validated = $request->validate([
+            'id_tipo_pago' => 'required|integer|exists:tipo_pago,id_tipo_pago',
+            'importe' => 'required|numeric|min:0',
+            'id_consulta' => 'required|integer|exists:consulta,id_consulta'
+        ]);
+        return PagoConsulta::create($validated);
     }
 
     public function update(Request $request, $id) {
-        $PagoConsulta = PagoConsulta::findOrFail($id);
-        $PagoConsulta->update($request->all());
-        return $PagoConsulta;
+        $validated = $request->validate([
+            'id_tipo_pago' => 'required|integer|exists:tipo_pago,id_tipo_pago',
+            'importe' => 'required|numeric|min:0',
+            'id_consulta' => 'required|integer|exists:consulta,id_consulta'
+        ]);
+
+        $pago = PagoConsulta::findOrFail($id);
+        $pago->update($validated);
+        return $pago;
     }
 
     public function destroy($id) {

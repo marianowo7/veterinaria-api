@@ -17,14 +17,22 @@ class RazaController extends Controller
     }
 
     public function store(Request $request) {
-        return Raza::create($request->all());
+        $validated = $request->validate([
+            'descrip_raza' => 'required|string|max:50|unique:raza,descrip_raza'
+        ]);
+        return Raza::create($validated);
     }
 
     public function update(Request $request, $id) {
-        $Raza = Raza::findOrFail($id);
-        $Raza->update($request->all());
-        return $Raza;
+        $validated = $request->validate([
+            'descrip_raza' => 'required|string|max:50|unique:raza,descrip_raza,' . $id . ',id_raza'
+        ]);
+
+        $raza = Raza::findOrFail($id);
+        $raza->update($validated);
+        return $raza;
     }
+
 
     public function destroy($id) {
         $Raza = Raza::findOrFail($id);
