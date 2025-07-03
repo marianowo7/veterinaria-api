@@ -10,6 +10,8 @@ use App\Http\Controllers\VeterinarioController;
 use App\Http\Controllers\ConsultaController;
 use App\Http\Controllers\ConsultaMedicamentoController;
 use App\Http\Controllers\PagoConsultaController;
+use App\Http\Controllers\AuthController;
+use Illuminate\Http\Request;
 
 //mascotas
 Route::get('/mascotas', [MascotaController::class, 'index']);
@@ -61,3 +63,14 @@ Route::get('/pago-consultas', [PagoConsultaController::class, 'index']);
 Route::post('/pago-consultas', [PagoConsultaController::class, 'store']);
 Route::put('/pago-consultas/{id}', [PagoConsultaController::class, 'update']);
 Route::delete('/pago-consultas/{id}', [PagoConsultaController::class, 'destroy']);
+
+//tokens
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::get('/usuario', function (Request $request) {
+        return $request->user(); 
+    });
+});
