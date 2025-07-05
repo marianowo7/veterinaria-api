@@ -12,8 +12,9 @@ class MascotaController extends Controller
         return Mascota::all();
     }
 
-    public function show($id) {
-        return Mascota::findOrFail($id);
+    public function show(Mascota $mascota) {
+        $this->authorize('view', $mascota);
+        return $mascota;
     }
 
     public function store(Request $request) {
@@ -24,7 +25,8 @@ class MascotaController extends Controller
             'peso_kg' => 'required|integer|min:0',
             'id_raza' => 'required|integer|exists:raza,id_raza'
         ]);
-
+        $validated['user_id'] = auth()->id();
+        $validated['cuit_duenio'] = auth()->id();
         return Mascota::create($validated);
     }
 
@@ -44,10 +46,10 @@ class MascotaController extends Controller
     }
 
 
-    public function destroy($id) {
-        $mascota = Mascota::findOrFail($id);
+    public function destroy(Mascota $mascota) {
+        $this->authorize('delete', $mascota);
         $mascota->delete();
-        return response()->json(['mensaje' => 'Mascota eliminada']);
+        return response()->json(['message' => 'Mascota eliminada']);
     }
 
 }

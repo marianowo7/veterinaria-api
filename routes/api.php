@@ -14,7 +14,7 @@ use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
 
 //mascotas
-Route::get('/mascotas', [MascotaController::class, 'index']);
+//Route::get('/mascotas', [MascotaController::class, 'index']);
 Route::post('/mascotas', [MascotaController::class, 'store']);
 Route::put('/mascotas/{id}', [MascotaController::class, 'update']);
 Route::delete('/mascotas/{id}', [MascotaController::class, 'destroy']);
@@ -35,10 +35,10 @@ Route::put('/tipo-pago/{id}', [TipoPagoController::class, 'update']);
 Route::delete('/tipo-pago/{id}', [TipoPagoController::class, 'destroy']);
 
 //medicamentos
-Route::get('/medicamentos', [MedicamentoController::class, 'index']);
-Route::post('/medicamentos', [MedicamentoController::class, 'store']);
-Route::put('/medicamentos/{id}', [MedicamentoController::class, 'update']);
-Route::delete('/medicamentos/{id}', [MedicamentoController::class, 'destroy']);
+// Route::get('/medicamentos', [MedicamentoController::class, 'index']);
+// Route::post('/medicamentos', [MedicamentoController::class, 'store']);
+// Route::put('/medicamentos/{id}', [MedicamentoController::class, 'update']);
+// Route::delete('/medicamentos/{id}', [MedicamentoController::class, 'destroy']);
 
 //veterinarios
 Route::get('/veterinarios', [VeterinarioController::class, 'index']);
@@ -47,10 +47,19 @@ Route::put('/veterinarios/{id}', [VeterinarioController::class, 'update']);
 Route::delete('/veterinarios/{id}', [VeterinarioController::class, 'destroy']);
 
 //consultas
-Route::get('/consultas', [ConsultaController::class, 'index']);
-Route::post('/consultas', [ConsultaController::class, 'store']);
-Route::put('/consultas/{id}', [ConsultaController::class, 'update']);
-Route::delete('/consultas/{id}', [ConsultaController::class, 'destroy']);
+// Route::get('/consultas', [ConsultaController::class, 'index']);
+// Route::post('/consultas', [ConsultaController::class, 'store']);
+// Route::put('/consultas/{id}', [ConsultaController::class, 'update']);
+// Route::delete('/consultas/{id}', [ConsultaController::class, 'destroy']);
+
+Route::middleware(['auth:sanctum', 'rol:veterinario'])->group(function () {
+    Route::get('/consultas', [ConsultaController::class, 'index']);
+    Route::post('/consultas', [ConsultaController::class, 'store']);
+    
+    Route::get('/medicamentos', [MedicamentoController::class, 'index']);
+    Route::post('/medicamentos', [MedicamentoController::class, 'store']);
+});
+
 
 //consultas-medicamento
 Route::get('/consulta-medicamento', [ConsultaMedicamentoController::class, 'index']);
@@ -69,8 +78,17 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
 Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/mascotas', [MascotaController::class, 'index']);
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/usuario', function (Request $request) {
         return $request->user(); 
     });
+    Route::post('/mascotas', [MascotaController::class, 'store']);
+    Route::get('/mis-mascotas', function (Request $request) {
+        return $request->user()->mascotas;
+    });
+});
+
+Route::middleware(['auth:sanctum', 'rol:admin,veterinario'])->group(function () {
+    Route::get('/mascotas', [MascotaController::class, 'index']);
 });

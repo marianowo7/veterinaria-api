@@ -15,7 +15,8 @@ class Mascota extends Model
         'cuit_duenio',
         'id_tipo_animal',
         'peso_kg',
-        'id_raza'
+        'id_raza',
+        'user_id'
     ];
 
     public function tipoAnimal(){
@@ -28,6 +29,10 @@ class Mascota extends Model
 
     public function consultas() {
         return $this->hasMany(Consulta::class, 'id_animal', 'id_mascota');
+    }
+
+    public function duenio() {
+        return $this->belongsTo(App\Models\User::class, 'user_id', 'id');
     }
 
 }

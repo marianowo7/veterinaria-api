@@ -20,6 +20,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        #'cuit',
         'email',
         'password',
     ];
@@ -46,4 +47,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function mascotas() {
+        return $this->hasMany(Mascota::class, 'user_id', 'id');
+    }
+
 }
