@@ -9,6 +9,10 @@ class Consulta extends Model
     protected $table = 'consulta';
     protected $primaryKey = 'id_consulta';
 
+    protected $casts = [
+        'cuit_veterinario' => 'string',
+    ];
+
     public $timestamps = false;
 
     protected $fillable = [

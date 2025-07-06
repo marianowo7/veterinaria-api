@@ -9,7 +9,7 @@ use App\Models\Consulta;
 class ConsultaController extends Controller
 {
     public function index() {
-        return Consulta::all();
+        return Consulta::with(['mascota', 'medicamentos', 'veterinario'])->get();
     }
 
     public function show($id) {

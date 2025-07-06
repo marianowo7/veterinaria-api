@@ -6,8 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class veterinario extends Model
 {
-        protected $table = 'veterinario';
+    protected $table = 'veterinario';
     protected $primaryKey = 'cuit_vet';
+    protected $keyType = 'string';
+    public $incrementing = false;
+    protected $casts = [
+        'cuit_vet' => 'string',
+    ];
+
+
 
     public $timestamps = false;
 
