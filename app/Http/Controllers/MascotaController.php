@@ -14,7 +14,6 @@ class MascotaController extends Controller
 
     public function show(Mascota $mascota) {
         $this->authorize('view', $mascota);
-        // Asegurarse de cargar las relaciones tipoAnimal y raza
         $mascota->load(['tipoAnimal', 'raza']);
         return $mascota;
     }

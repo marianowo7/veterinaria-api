@@ -27,6 +27,15 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/mis-mascotas', function (Request $request) {
         return $request->user()->mascotas;
     });
+    Route::get('/mis-consultas', function (Request $request) {
+        return $request->user()
+        ->mascotas()
+        ->with(['consultas.veterinario'])
+        ->get()
+        ->pluck('consultas')
+        ->flatten();
+    });
+    Route::get('/consultas/{id}', [ConsultaController::class, 'show']);
 
     //admin, veterinario
     Route::middleware(['rol:admin,veterinario'])->group(function () {
